@@ -44,7 +44,7 @@ public class GameManager : StaticInstance<GameManager> {
                 break;
             case GameState.PrepareTurn:
                 break;
-            case GameState.PerformTurn:
+            case GameState.ExecuteTurn:
                 break;
             case GameState.Returned:
                 break;
@@ -74,7 +74,7 @@ public enum GameState {
     RecruitHero,
     FirmLobby,
     PrepareTurn,
-    PerformTurn,
+    ExecuteTurn,
     Returned,
     Lost,
 }

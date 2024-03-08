@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class PlayerTurnManager : Singleton<PlayerTurnManager> {
 
-    [SerializeField] private GameObject playerObject;
+    public GameObject playerObject;
 
     // Start is called before the first frame update
     void Start() {
@@ -29,4 +29,6 @@ public class PlayerTurnManager : Singleton<PlayerTurnManager> {
 
         // now, selectedUnit.gameObject == playerObject
     }
+
+    
 }
