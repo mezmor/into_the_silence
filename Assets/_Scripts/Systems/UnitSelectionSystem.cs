@@ -28,6 +28,11 @@ public class UnitSelectionSystem : Singleton<UnitSelectionSystem> {
             return;
         }
 
+        // we don't want to select things if the movement mode is active
+        if (MovementModeSystem.Instance.IsActive()) {
+            return;
+        }
+
         if (TryHandleUnitSelection()) {
             return;
         }

@@ -2,10 +2,25 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class MovementModeSystem : Singleton<MovementModeSystem> {
+    /*
+    * states:
+    * - not in movement mode - no planned movement --> dont draw shit
+    * - not in movement mode - planned movement    --> draw transparent clone (at planned movement)
+    * - in movement mode     - no planned movement --> draw dynamic transparent clone & ring, no planned movement to draw
+    * - in movement mode     - planned movement    --> draw dynamic transparent clone & ring, do not draw planned movement
+    *
+    * state changes & actions are:
+    * not in movement mode --( right clicking player / clicking movement action button )--> movement mode --> no change to planned action
+    *        movement mode --( right click cancel  )-->                not in movement mode                --> no change to planned action
+    *        movement mode --( left click confirm  )-->                not in movement mode                --> cancel planned action, plan this action 
+    *        movement mode --( shift + right click )-->                not in movement mode                --> cancel planned action if one
+    * not in movement mode --( cancel button       )-->                not in movement mode                --> cancel planned action if one [TODO]
+    */
 
     [SerializeField] private GameObject playerObject;
     [SerializeField] private GameObject playerCloneObject;
@@ -14,6 +29,8 @@ public class MovementModeSystem : Singleton<MovementModeSystem> {
     [SerializeField] private float radius;
 
     private bool modeActive = false;
+    private bool actionPlanned;
+    private Vector2 plannedActionPosition;
 
     private void Start() {
         circleRenderer.positionCount = 0;
@@ -24,9 +41,8 @@ public class MovementModeSystem : Singleton<MovementModeSystem> {
     void Update() {
         if (EventSystem.current.IsPointerOverGameObject()) return;
 
-        TryHandleMovementModeEnablement();
-
         if (modeActive) MovementModeGo();
+        if (!modeActive) TryHandleMovementModeEnablement();
     }
 
     private void MovementModeGo() {
@@ -38,10 +54,41 @@ public class MovementModeSystem : Singleton<MovementModeSystem> {
         Vector2 clampedOffset = Vector2.ClampMagnitude(offset, radius);
 
         playerCloneObject.transform.position = center + clampedOffset;
-
+        
         // left click to confirm
-        // confirm sets the jet module's task to move to the clone's position
-        // right click to cancel
+        if (Input.GetMouseButtonDown(0)) {
+            ConfirmMovement();
+        }
+        
+        // right click to exit movement mode without removing our planned action
+        if (Input.GetMouseButtonDown(1)) {
+            // if holding shift, we'll cancel the planned action
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
+                CancelMovement();
+            } else {
+                // not holding shift, just exit mode
+                DisableMovementMode();
+            }
+        }
+
+
+    }
+
+    private void ConfirmMovement() {
+        plannedActionPosition = playerCloneObject.transform.position;
+
+        // TODO: register movement action using plannedActionPosition
+
+        actionPlanned = true;
+        DisableMovementMode();
+    }
+
+    private void CancelMovement() {
+        actionPlanned = false;
+
+        // TODO: remove registered move action
+
+        DisableMovementMode();
     }
 
     private void TryHandleMovementModeEnablement() {
@@ -56,7 +103,7 @@ public class MovementModeSystem : Singleton<MovementModeSystem> {
             if (hit.collider != null
                 && selectedUnit.gameObject == hit.transform.gameObject
                 && selectedUnit.gameObject == playerObject) {
-                    EnableMovementMode();
+                EnableMovementMode();
             }
         }
     }
@@ -64,19 +111,46 @@ public class MovementModeSystem : Singleton<MovementModeSystem> {
     private void EnableMovementMode() {
         this.radius = 3f; // Ultimately, we get the maximum movement distance from the player's jets.
 
-        ShowCircle(playerObject);
-        ShowPlayerClone(playerObject);
-        this.modeActive = true;
+        ShowDynamicPlayerClone();
+        ShowCircle();
+
+        modeActive = true;
     }
 
-    private void ShowCircle(GameObject anchor) {
-        gameObject.transform.position = anchor.transform.position;
-        gameObject.transform.SetParent(anchor.transform);
+    private void DisableMovementMode() {
+        this.modeActive = false;
+
+        TryShowStaticPlayerClone();
+        HideCircle();
+    }
+
+    private void ShowDynamicPlayerClone() {
+        // check the execution queue for the movement position
+        playerCloneObject.SetActive(true);
+    }
+
+    private void TryShowStaticPlayerClone() {
+        if (actionPlanned) {
+            // TODO: check execution queue for move action
+            playerCloneObject.transform.position = plannedActionPosition;
+            playerCloneObject.SetActive(true);
+        } else {
+            HidePlayerClone();
+        }
+    }
+
+    private void HidePlayerClone() {
+        playerCloneObject.SetActive(false);
+    }
+
+    private void ShowCircle() {
+        gameObject.transform.position = playerObject.transform.position;
+        gameObject.transform.SetParent(playerObject.transform);
         DrawCircle();
     }
 
-    private void ShowPlayerClone(GameObject playerObject) {
-        playerCloneObject.SetActive(true);
+    private void HideCircle() {
+        circleRenderer.positionCount = 0;
     }
 
     private void DrawCircle() {
@@ -99,22 +173,11 @@ public class MovementModeSystem : Singleton<MovementModeSystem> {
         }
     }
 
-    private void DisableMovementMode() {
-        this.modeActive = false;
-
-        HidePlayerClone();
-        HideCircle();
-    }
-
-    private void HidePlayerClone() {
-        playerCloneObject.SetActive(false);
-    }
-
-    private void HideCircle() {
-        circleRenderer.positionCount = 0;
-    }
-
     private void SelectedUnitChangedHandler(object sender, EventArgs e) {
         DisableMovementMode();
+    }
+
+    public bool IsActive() {
+        return modeActive;
     }
 }
