@@ -117,6 +117,7 @@ public class MovementModeSystem : Singleton<MovementModeSystem> {
     private void EnableMovementMode() {
         // open jet module selection
         FindObjectOfType<JetModuleSelectorMenu>().EnableSelector();
+
         this.radius = 3f; // Ultimately, we get the maximum movement distance from the player's jets.
 
         ShowDynamicPlayerClone();
@@ -126,8 +127,9 @@ public class MovementModeSystem : Singleton<MovementModeSystem> {
     }
 
     private void DisableMovementMode() {
-        // open jet module selection
+        // close jet module selection
         FindObjectOfType<JetModuleSelectorMenu>().DisableSelector();
+        
         this.modeActive = false;
 
         TryShowStaticPlayerClone();
