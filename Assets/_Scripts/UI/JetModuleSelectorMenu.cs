@@ -18,4 +18,14 @@ public class JetModuleSelectorMenu : MonoBehaviour {
         visible = !visible;
         moduleSelectorUi.SetActive(visible);
     }
+
+    public void EnableSelector() {
+        visible = true;
+        moduleSelectorUi.SetActive(true);
+    }
+
+    public void DisableSelector() {
+        visible = false;
+        moduleSelectorUi.SetActive(false);
+    }
 }

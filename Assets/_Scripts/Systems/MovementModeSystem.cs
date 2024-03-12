@@ -92,6 +92,12 @@ public class MovementModeSystem : Singleton<MovementModeSystem> {
     }
 
     private void TryHandleMovementModeEnablement() {
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)) { 
+            EnableMovementMode();
+            return;
+        }
+
         // Right click the selected object
         if (Input.GetMouseButtonDown(1) && UnitSelectionSystem.Instance.GetSelectedUnit() is var selectedUnit && selectedUnit != null) {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -109,6 +115,8 @@ public class MovementModeSystem : Singleton<MovementModeSystem> {
     }
 
     private void EnableMovementMode() {
+        // open jet module selection
+        FindObjectOfType<JetModuleSelectorMenu>().EnableSelector();
         this.radius = 3f; // Ultimately, we get the maximum movement distance from the player's jets.
 
         ShowDynamicPlayerClone();
@@ -118,6 +126,8 @@ public class MovementModeSystem : Singleton<MovementModeSystem> {
     }
 
     private void DisableMovementMode() {
+        // open jet module selection
+        FindObjectOfType<JetModuleSelectorMenu>().DisableSelector();
         this.modeActive = false;
 
         TryShowStaticPlayerClone();

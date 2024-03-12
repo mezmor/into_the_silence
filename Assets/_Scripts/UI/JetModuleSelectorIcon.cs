@@ -11,8 +11,8 @@ public class JetModuleSelectorIcon : MonoBehaviour {
         SetIconColor();
     }
 
-    public void ToggleModule() {
-        moduleEnabled = !moduleEnabled;
+    public void EnableModule(){
+        moduleEnabled = true;
         SetIconColor();
     }
 
@@ -24,4 +24,5 @@ public class JetModuleSelectorIcon : MonoBehaviour {
             gameObject.GetComponent<Image>().color = new Color32(24, 25, 26, 255);
         }
     }
+    
 }
