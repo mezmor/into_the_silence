@@ -34,8 +34,9 @@ public class MovementModeSystem : Singleton<MovementModeSystem> {
     private Vector2 plannedActionPosition;
 
     private void Start() {
+        Transform environmentContainer = GameObject.Find("Environment").transform;
         playerObject = GameObject.FindGameObjectWithTag("Player");
-        playerCloneObject = Instantiate(playerClonePrefab, new Vector2(0, 0), Quaternion.identity);
+        playerCloneObject = Instantiate(playerClonePrefab, new Vector2(0, 0), Quaternion.identity, environmentContainer);
         circleRenderer.positionCount = 0;
         UnitSelectionSystem.Instance.OnSelectedUnitChanged += SelectedUnitChangedHandler;
     }

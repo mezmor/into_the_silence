@@ -10,6 +10,7 @@ public class GameManager : StaticInstance<GameManager> {
 
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private MovementModeSystem movementModePrefab;
+    [SerializeField] private UnitSelectionSystem unitSelectionSystemPrefab;
 
 
     public static event Action<GameState> OnBeforeStateChanged;
@@ -72,10 +73,15 @@ public class GameManager : StaticInstance<GameManager> {
         // Probably spawn all the things on the map
 
         // Load player
-        Instantiate(playerPrefab, new Vector2(0, 0), Quaternion.identity);
+        Transform environmentContainer = GameObject.Find("Environment").transform;
+        GameObject playerObject = Instantiate(playerPrefab, new Vector2(0, 0), Quaternion.identity, environmentContainer);
+        ShipInstance playerShip = playerObject.AddComponent<ShipInstance>();
+        playerShip.SetupShip(ResourceSystem.Instance.ShipStats[0]);
 
         // SYSTEMS: ENGAGE
-        Instantiate(movementModePrefab, new Vector2(0, 0), Quaternion.identity);
+        Transform systemsContainer = GameObject.Find("Systems").transform;
+        Instantiate(movementModePrefab, new Vector2(0, 0), Quaternion.identity, systemsContainer);
+        Instantiate(unitSelectionSystemPrefab, new Vector2(0, 0), Quaternion.identity, systemsContainer);
 
         Debug.Log("LOADING FINISH");
         ChangeState(GameState.PrepareTurn);

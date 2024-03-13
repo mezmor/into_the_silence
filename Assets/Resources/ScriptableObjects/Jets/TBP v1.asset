@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b23af75dcba27f4468a97a5308d058db, type: 3}
   m_Name: TBP v1
   m_EditorClassIdentifier: 
-  Name: 
-  Description: 
-  MoveDistance: 0
-  EnergyConsumption: 0
+  Name: Taco Bell Propulsions v1
+  Description: When you gotta go, you gotta go.
+  MoveDistance: 5
+  EnergyConsumption: 2

@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96db7a65bcb5de74fa1f23f9d7049154, type: 3}
   m_Name: SBA Go
   m_EditorClassIdentifier: 
-  Name: 
-  Description: 
-  Hull: {fileID: 0}
-  MaxJets: 0
-  Jets: []
+  Name: SBA Go
+  Description: The Svarovski-Boeing Go is the ship that gets you up and running quick.
+  HullStats: {fileID: 11400000, guid: 3cc28836b398f52419857b2d2d7a0df0, type: 2}
+  MaxJets: 1
+  JetStats:
+  - {fileID: 11400000, guid: 2ada59bdddd156248a4d4ebc6565aa2e, type: 2}

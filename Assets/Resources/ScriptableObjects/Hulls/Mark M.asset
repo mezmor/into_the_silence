@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Mark M
   Description: Basic hull that lacks any and all optimizations.
-  HP: 100
+  MaxHP: 100

@@ -3,15 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShipInstance {
+public class ShipInstance : MonoBehaviour {
 
     [SerializeField] private ShipStats _stats;
     
     [SerializeField] private int currentHP;
-    [SerializeField] private List<JetInstance> jetModules;
+    [SerializeField] private List<JetInstance> jetModules = new();
 
 
-    public ShipInstance(ShipStats baseStats) {
+    public void SetupShip(ShipStats baseStats) {
+        // this check probably not necessary?
         if (baseStats == null) {
             throw new ArgumentNullException();
         }
