@@ -75,6 +75,8 @@ public class GameManager : StaticInstance<GameManager> {
         // Load player
         Transform environmentContainer = GameObject.Find("Environment").transform;
         GameObject playerObject = Instantiate(playerPrefab, new Vector2(0, 0), Quaternion.identity, environmentContainer);
+
+        // load the default ship right now, ultimately this will be chosen during the Lobby
         ShipInstance playerShip = playerObject.AddComponent<ShipInstance>();
         playerShip.SetupShip(ResourceSystem.Instance.ShipStats[0]);
 
