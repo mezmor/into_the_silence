@@ -22,8 +22,9 @@ public class MovementModeSystem : Singleton<MovementModeSystem> {
     * not in movement mode --( cancel button       )-->                not in movement mode                --> cancel planned action if one [TODO]
     */
 
-    [SerializeField] private GameObject playerObject;
-    [SerializeField] private GameObject playerCloneObject;
+    private GameObject playerObject;
+    private GameObject playerCloneObject;
+    [SerializeField] private GameObject playerClonePrefab;
     [SerializeField] private LineRenderer circleRenderer;
     [SerializeField] private int steps;
     [SerializeField] private float radius;
@@ -33,6 +34,8 @@ public class MovementModeSystem : Singleton<MovementModeSystem> {
     private Vector2 plannedActionPosition;
 
     private void Start() {
+        playerObject = GameObject.FindGameObjectWithTag("Player");
+        playerCloneObject = Instantiate(playerClonePrefab, new Vector2(0, 0), Quaternion.identity);
         circleRenderer.positionCount = 0;
         UnitSelectionSystem.Instance.OnSelectedUnitChanged += SelectedUnitChangedHandler;
     }

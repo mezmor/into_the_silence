@@ -7,6 +7,11 @@ using UnityEngine;
 using UnityEngine.XR;
 
 public class GameManager : StaticInstance<GameManager> {
+
+    [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private MovementModeSystem movementModePrefab;
+
+
     public static event Action<GameState> OnBeforeStateChanged;
     public static event Action<GameState> OnAfterStateChanged;
 
@@ -14,7 +19,8 @@ public class GameManager : StaticInstance<GameManager> {
 
     protected override void Awake() {
         base.Awake();
-        ChangeState(GameState.PrepareTurn); // Right into game
+        // ChangeState(GameState.PrepareTurn); // Right into game
+        ChangeState(GameState.LoadSilence);
     }
 
     void Start() {
@@ -42,6 +48,9 @@ public class GameManager : StaticInstance<GameManager> {
                 break;
             case GameState.FirmLobby:
                 break;
+            case GameState.LoadSilence:
+                LoadAllTheThings();
+                break;
             case GameState.PrepareTurn:
                 break;
             case GameState.ExecuteTurn:
@@ -55,6 +64,21 @@ public class GameManager : StaticInstance<GameManager> {
         }
 
         OnAfterStateChanged?.Invoke(newState);
+    }
+
+    private void LoadAllTheThings() {
+        Debug.Log("LOADING START");
+        // Load map
+        // Probably spawn all the things on the map
+
+        // Load player
+        Instantiate(playerPrefab, new Vector2(0, 0), Quaternion.identity);
+
+        // SYSTEMS: ENGAGE
+        Instantiate(movementModePrefab, new Vector2(0, 0), Quaternion.identity);
+
+        Debug.Log("LOADING FINISH");
+        ChangeState(GameState.PrepareTurn);
     }
 
     private void HandleStarting() {
@@ -73,6 +97,7 @@ public enum GameState {
     NewGameFlow,
     RecruitHero,
     FirmLobby,
+    LoadSilence,
     PrepareTurn,
     ExecuteTurn,
     Returned,

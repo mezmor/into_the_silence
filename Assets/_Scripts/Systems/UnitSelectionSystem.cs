@@ -9,12 +9,11 @@ public class UnitSelectionSystem : Singleton<UnitSelectionSystem> {
     [SerializeField] private GameObject unitTargetedPrefab;
     [SerializeField] private LayerMask selectableLayerMask;
     [SerializeField] private LayerMask uiLayerMask;
-    [SerializeField] private GameObject playerGameObject;
     private GameObject targetReticleObj;
 
     public event EventHandler OnSelectedUnitChanged;
 
-    private Unit selectedUnit;
+    private SelectableUnit selectedUnit;
 
     // Start is called before the first frame update
     void Start() {
@@ -57,7 +56,7 @@ public class UnitSelectionSystem : Singleton<UnitSelectionSystem> {
             }
 
             // we click a unit
-            if (unitHit.collider != null && unitHit.transform.TryGetComponent<Unit>(out Unit unit)) {
+            if (unitHit.collider != null && unitHit.transform.TryGetComponent<SelectableUnit>(out SelectableUnit unit)) {
                 if (unit == selectedUnit) {
                     return false;
                 }
@@ -69,13 +68,13 @@ public class UnitSelectionSystem : Singleton<UnitSelectionSystem> {
         return false;
     }
 
-    private void SetSelectedUnit(Unit unit) {
+    private void SetSelectedUnit(SelectableUnit unit) {
         Debug.Log("SetSelectedUnit|: " + unit?.gameObject.name);
         selectedUnit = unit;
         OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    public Unit GetSelectedUnit() {
+    public SelectableUnit GetSelectedUnit() {
         return this.selectedUnit;
     }
 

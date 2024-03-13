@@ -14,6 +14,7 @@ public class JetModuleSelectorMenu : MonoBehaviour {
         moduleSelectorUi.SetActive(false);
     }
 
+    // UI onclick
     public void ToggleSelector() {
         visible = !visible;
         moduleSelectorUi.SetActive(visible);

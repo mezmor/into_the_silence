@@ -6,8 +6,6 @@ using UnityEngine.EventSystems;
 
 public class PlayerTurnManager : Singleton<PlayerTurnManager> {
 
-    public GameObject playerObject;
-
     // Start is called before the first frame update
     void Start() {
         UnitSelectionSystem.Instance.OnSelectedUnitChanged += UnitSelectionSystem_OnSelectedUnitChanged;
@@ -21,11 +19,9 @@ public class PlayerTurnManager : Singleton<PlayerTurnManager> {
     }
 
     private void UnitSelectionSystem_OnSelectedUnitChanged(object sender, EventArgs e) {
-        Unit selectedUnit = UnitSelectionSystem.Instance.GetSelectedUnit();
+        SelectableUnit selectedUnit = UnitSelectionSystem.Instance.GetSelectedUnit();
 
         if (selectedUnit == null) { return; }
-
-        if (selectedUnit.gameObject != playerObject) { return; }
 
         // now, selectedUnit.gameObject == playerObject
     }
