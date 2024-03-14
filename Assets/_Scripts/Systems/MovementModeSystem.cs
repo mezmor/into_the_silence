@@ -43,6 +43,13 @@ public class MovementModeSystem : Singleton<MovementModeSystem> {
 
     // Update is called once per frame
     void Update() {
+        // check for travel distance changes and redraw circle as needed
+        int maxTravelDistance = GameObject.FindGameObjectWithTag("Player").GetComponent<ShipInstance>().GetMaxTravelDistance();
+        if (this.radius != maxTravelDistance) {
+            this.radius = maxTravelDistance;
+            DrawCircle();
+        }
+
         if (EventSystem.current.IsPointerOverGameObject()) return;
 
         if (modeActive) MovementModeGo();
@@ -126,7 +133,7 @@ public class MovementModeSystem : Singleton<MovementModeSystem> {
         // open jet module selection
         FindObjectOfType<JetModuleMenuController>().EnableSelector();
 
-        this.radius = 3f; // Ultimately, we get the maximum movement distance from the player's jets.
+        this.radius = GameObject.FindGameObjectWithTag("Player").GetComponent<ShipInstance>().GetMaxTravelDistance();
 
         ShowDynamicPlayerClone();
         ShowCircle();

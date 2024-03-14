@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -31,5 +33,14 @@ public class ShipInstance : MonoBehaviour {
     public List<JetInstance> GetJets() {
         return jetModules;
     }
-    
+
+    public int GetMaxTravelDistance() {
+        int travelDistance = 0;
+        foreach (var jet in jetModules) {
+            if (jet.ModuleEnabled()) {
+                travelDistance += jet.GetMoveDistance();
+            }
+        }
+        return travelDistance;
+    }
 }

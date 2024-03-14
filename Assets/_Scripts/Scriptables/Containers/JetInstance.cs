@@ -29,4 +29,8 @@ public class JetInstance {
     public bool ModuleEnabled() {
         return moduleEnabled;
     }
+
+    public int GetMoveDistance() {
+        return _stats.MoveDistance;
+    }
 }
