@@ -47,6 +47,16 @@ public class MovementModeSystem : Singleton<MovementModeSystem> {
 
         if (modeActive) MovementModeGo();
         if (!modeActive) TryHandleMovementModeEnablement();
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+            if (modeActive) {
+                DisableMovementMode();
+                return;
+            } else {
+                EnableMovementMode();
+                return;
+            }
+        }
     }
 
     private void MovementModeGo() {
@@ -96,12 +106,6 @@ public class MovementModeSystem : Singleton<MovementModeSystem> {
     }
 
     private void TryHandleMovementModeEnablement() {
-
-        if (Input.GetKeyDown(KeyCode.Alpha1)) { 
-            EnableMovementMode();
-            return;
-        }
-
         // Right click the selected object
         if (Input.GetMouseButtonDown(1) && UnitSelectionSystem.Instance.GetSelectedUnit() is var selectedUnit && selectedUnit != null) {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
