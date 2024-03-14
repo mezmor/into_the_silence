@@ -118,9 +118,9 @@ public class MovementModeSystem : Singleton<MovementModeSystem> {
         }
     }
 
-    private void EnableMovementMode() {
+    public void EnableMovementMode() {
         // open jet module selection
-        FindObjectOfType<JetModuleSelectorMenu>().EnableSelector();
+        FindObjectOfType<JetModuleMenuController>().EnableSelector();
 
         this.radius = 3f; // Ultimately, we get the maximum movement distance from the player's jets.
 
@@ -130,9 +130,9 @@ public class MovementModeSystem : Singleton<MovementModeSystem> {
         modeActive = true;
     }
 
-    private void DisableMovementMode() {
+    public void DisableMovementMode() {
         // close jet module selection
-        FindObjectOfType<JetModuleSelectorMenu>().DisableSelector();
+        FindObjectOfType<JetModuleMenuController>().DisableSelector();
         
         this.modeActive = false;
 

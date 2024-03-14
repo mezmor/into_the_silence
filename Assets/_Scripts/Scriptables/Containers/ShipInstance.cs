@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShipInstance : MonoBehaviour {
@@ -26,4 +27,9 @@ public class ShipInstance : MonoBehaviour {
             jetModules.Add(new JetInstance(_stats.JetStats[i]));
         }
     }
+
+    public List<JetInstance> GetJets() {
+        return jetModules;
+    }
+    
 }

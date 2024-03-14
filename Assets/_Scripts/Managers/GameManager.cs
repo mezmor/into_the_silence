@@ -12,7 +12,6 @@ public class GameManager : StaticInstance<GameManager> {
     [SerializeField] private MovementModeSystem movementModePrefab;
     [SerializeField] private UnitSelectionSystem unitSelectionSystemPrefab;
 
-
     public static event Action<GameState> OnBeforeStateChanged;
     public static event Action<GameState> OnAfterStateChanged;
 

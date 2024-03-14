@@ -4,31 +4,39 @@ using UnityEngine.UI;
 using UnityEngine;
 
 public class JetModuleSelectorIcon : MonoBehaviour {
-    private bool moduleEnabled;
+    private JetInstance jetModule;
 
     void Start() {
-        moduleEnabled = false;
+        SetIconColorOff();
+    }
+
+    public void SetModule(JetInstance jetRef) {
+        jetModule = jetRef;
         SetIconColor();
     }
 
-    public void EnableModule(){
-        moduleEnabled = true;
+    public void EnableModule() {
+        jetModule.EnableModule();
         SetIconColor();
     }
 
     // UI onclick
     public void ToggleModule() {
-        moduleEnabled = !moduleEnabled;
+        jetModule.ToggleModule();
         SetIconColor();
     }
 
     private void SetIconColor() {
-        if(moduleEnabled) {
+        if (jetModule.ModuleEnabled()) {
             gameObject.GetComponent<Image>().color = new Color32(24, 128, 24, 255);
         } else {
-            // gameObject.GetComponent<Image>().color = new Color(156, 0, 0, 255);
-            gameObject.GetComponent<Image>().color = new Color32(24, 25, 26, 255);
+            SetIconColorOff();
         }
     }
-    
+
+    private void SetIconColorOff() {
+        // gameObject.GetComponent<Image>().color = new Color(156, 0, 0, 255);
+        gameObject.GetComponent<Image>().color = new Color32(24, 25, 26, 255);
+    }
+
 }

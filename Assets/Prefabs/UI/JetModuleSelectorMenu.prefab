@@ -224,7 +224,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1940235527410205898, guid: 54a7bd502063b47e98f426a15ba7d3e2, type: 3}
       propertyPath: m_Name
-      value: JetModuleSelector
+      value: JetModuleSelectorMenu
       objectReference: {fileID: 0}
     - target: {fileID: 1940235527410205899, guid: 54a7bd502063b47e98f426a15ba7d3e2, type: 3}
       propertyPath: m_Pivot.x
@@ -337,6 +337,10 @@ PrefabInstance:
     - target: {fileID: 1940235528246657455, guid: 54a7bd502063b47e98f426a15ba7d3e2, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2188722345076735306, guid: 54a7bd502063b47e98f426a15ba7d3e2, type: 3}
+      propertyPath: m_Name
+      value: IconContainer
       objectReference: {fileID: 0}
     - target: {fileID: 2188722345076735306, guid: 54a7bd502063b47e98f426a15ba7d3e2, type: 3}
       propertyPath: m_IsActive
