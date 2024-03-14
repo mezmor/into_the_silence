@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96db7a65bcb5de74fa1f23f9d7049154, type: 3}
   m_Name: Coke MG 2
   m_EditorClassIdentifier: 
-  Name: 
-  Description: 
-  HullStats: {fileID: 0}
-  MaxJets: 0
-  JetStats: []
+  Name: Coke MG 2
+  Description: The Coke MG 2 is for someone who wants a pop to their prop.
+  HullStats: {fileID: 11400000, guid: 3cc28836b398f52419857b2d2d7a0df0, type: 2}
+  MaxJets: 2
+  JetStats:
+  - {fileID: 11400000, guid: 2ada59bdddd156248a4d4ebc6565aa2e, type: 2}
+  - {fileID: 11400000, guid: 2ada59bdddd156248a4d4ebc6565aa2e, type: 2}
